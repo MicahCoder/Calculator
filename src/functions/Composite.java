@@ -2,30 +2,26 @@ package functions;
 
 import java.util.function.DoubleFunction;
 
-public class Constant implements Function {
-    public static final Constant PI = new Constant("\\pi", Math.PI);
-    public static final Constant E = new Constant("e", Math.E);
-
+public class Composite implements Function {
     private final DoubleFunction<Double> function;
-    private String name = "f";
-    private String valueString;
+    private String name;
     private String var = "x";
+    private final Function function1;
+    private final Function function2;
 
     // List of coeefiicients, starting by the highest order
-    public Constant(double value) {
-        this.valueString = doubleToString(value);
-        function = (x) -> value;
+    public Composite(Function function1, Function function2) {
+        this.function1 = function1;
+        this.function2 = function2;
+        this.name = function1.getName() + "\\circ " + function2.getName();
+        this.function = (x) -> function1.apply(function2.apply(x));
+
     }
 
-    public Constant(String functionName, String varName, double value) {
-        this(value);
+    public Composite(String functionName, String varName, Function function1, Function function2) {
+        this(function1, function2);
         this.name = functionName;
         this.var = varName;
-    }
-
-    public Constant(String stringForm, double value) {
-        this(value);
-        valueString = stringForm;
     }
 
     @Override
@@ -50,7 +46,7 @@ public class Constant implements Function {
 
     @Override
     public String toTex() {
-        return valueString;
+        return function1.toTex().replace(function1.getVar(), "\\left(" + function2.toTex() + "\\right)");
     }
 
     public String toString() {

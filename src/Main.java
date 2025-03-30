@@ -16,12 +16,15 @@ public class Main {
         Function gofx = new CustomFunction("\\sqrt{4-x^2}", (x) -> Math.sqrt(4 - x * x));
         Function eToX = new Exponential("e", Math.E);
         Function monomial = new Monomial(1.5, 0);
-
-        Function product = new Product(gofx, eToX);
+        Function product = new Composite(new Sum(eToX, polynomial), gofx);
         // System.out.println(polynomial);
         // System.out.println(polynomial.toTex());
         writeToTexFile("src/outputTex/output.tex",
-                Calculator.evaluateIntegralTex(new Sum(monomial, new Rational(polynomial, product)), a, b, steps, "l"));
+                Calculator.evaluateIntegralTex(
+                        new Composite(new Misc("g", "x", "ln"),
+                                new Sum(monomial, new Rational(polynomial, product), Constant.PI)),
+                        a, b,
+                        steps, "l"));
     }
 
     public static void writeToFile(String filePath, String text) {
