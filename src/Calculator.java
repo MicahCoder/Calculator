@@ -38,7 +38,7 @@ public class Calculator {
         double out = 0.0;
         for (double x = a; x < b; x += dx) {
             double fdx = f.apply(x) * dx;
-            out += Double.isNaN(fdx) ? 0 : fdx;
+            out += Double.isNaN(fdx) || Double.isInfinite(fdx) ? 0 : fdx;
         }
         return out;
     }
@@ -49,7 +49,7 @@ public class Calculator {
         double out = 0.0;
         for (double x = a + dx; x <= b; x += dx) {
             double fdx = f.apply(x) * dx;
-            out += Double.isNaN(fdx) ? 0 : fdx;
+            out += Double.isNaN(fdx) || Double.isInfinite(fdx) ? 0 : fdx;
         }
         return out;
     }
@@ -60,7 +60,7 @@ public class Calculator {
         double out = 0.0;
         for (double x = a; x <= b; x += dx) {
             double fdx = (f.apply(x) + f.apply(x + dx)) / 2 * dx;
-            out += Double.isNaN(fdx) ? 0 : fdx;
+            out += Double.isNaN(fdx) || Double.isInfinite(fdx) ? 0 : fdx;
         }
         return out;
     }

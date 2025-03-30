@@ -1,4 +1,6 @@
-import functions.*;
+import functions.Composite;
+import static functions.Function.*;
+import functions.Monomial;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.DoubleFunction;
@@ -6,25 +8,13 @@ import java.util.function.DoubleFunction;
 public class Main {
     public static void main(String[] args) {
         DoubleFunction<Double> f = x -> Math.sqrt(4 - x * x);
-        double a = 0.0;
-        double b = 2;
+        double a = -50;
+        double b = 50;
         int steps = 10000000;
 
-        // System.out.println("f(x) = sqrt(4-x^2)");
-        // System.out.println(Calculator.evaluateIntegral(f, a, b, steps, "R"));
-        Function polynomial = new Polynomial(1.5, 0, 0, 5);
-        Function gofx = new CustomFunction("\\sqrt{4-x^2}", (x) -> Math.sqrt(4 - x * x));
-        Function eToX = new Exponential("e", Math.E);
-        Function monomial = new Monomial(1.5, 0);
-        Function product = new Composite(new Sum(eToX, polynomial), gofx);
-        // System.out.println(polynomial);
-        // System.out.println(polynomial.toTex());
-        writeToTexFile("src/outputTex/output.tex",
-                Calculator.evaluateIntegralTex(
-                        new Composite(new Misc("g", "x", "ln"),
-                                new Sum(monomial, new Rational(polynomial, product), Constant.PI)),
-                        a, b,
-                        steps, "l"));
+        writeToTexFile("src/outputTex/output.tex", Calculator.evaluateIntegralTex(
+                new Composite("f", "x", ETOX, new Monomial(-1, 2)),
+                a, b, steps, "t"));
     }
 
     public static void writeToFile(String filePath, String text) {
