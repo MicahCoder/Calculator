@@ -44,11 +44,16 @@ public class Monomial implements Function {
 
     @Override
     public String toTex() {
-        return doubleToString(coefficient, "p") + var + "^{" + doubleToString(power, "p") + "}";
+        return doubleToString(coefficient, "p") + var + (power == 1 ? "" : "^{" + doubleToString(power, "p") + "}");
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Monomial(name + "'", var, coefficient * power, power - 1);
+    }
 }

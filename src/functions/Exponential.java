@@ -59,8 +59,14 @@ public class Exponential implements Function {
         return baseString + "^{" + var + "}";
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Product(name + "'", var, new Constant("\\ln{" + doubleToString(base) + "}", Math.log(base)),
+                new Exponential(name + "'", var, base));
+    }
 }

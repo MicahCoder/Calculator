@@ -52,4 +52,12 @@ public class Rational implements Function {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Rational(name + "'", var,
+                new Sum(new Product(denominator, numerator.prime()),
+                        new Product(new Constant(-1), numerator, denominator.prime())),
+                new Composite(new Monomial(1, 2), denominator));
+    }
+
 }

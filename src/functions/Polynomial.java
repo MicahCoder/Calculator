@@ -62,7 +62,7 @@ public class Polynomial implements Function {
                 continue;
             }
             if (n == order) {
-                out += (order == 0 ? "" : " + ") + coefficient;
+                out += (order == 0 ? "" : " + ") + doubleToString(coefficients[n], "s");
                 continue;
             }
             out += (n == 0 ? "" : " + ") + coefficient + var + "^" + (order - n);
@@ -72,6 +72,15 @@ public class Polynomial implements Function {
 
     public String toString() {
         return name + "(" + var + ") = " + toTex();
+    }
+
+    @Override
+    public Function prime() {
+        double[] primes = new double[coefficients.length - 1];
+        for (int i = 0; i < coefficients.length - 1; i++) {
+            primes[i] = coefficients[i] * (coefficients.length - i - 1);
+        }
+        return new Polynomial(name + "'", var, primes);
     }
 
 }

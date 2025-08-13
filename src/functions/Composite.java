@@ -4,7 +4,7 @@ import java.util.function.DoubleFunction;
 
 public class Composite implements Function {
     private final DoubleFunction<Double> function;
-    private String name;
+    private String name = "f";
     private String var = "x";
     private final Function function1;
     private final Function function2;
@@ -49,8 +49,15 @@ public class Composite implements Function {
         return function1.toTex().replace(function1.getVar(), "\\left(" + function2.toTex() + "\\right)");
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Product(name + "'", var,
+                function2.prime(),
+                new Composite(function1.prime(), function2));
+    }
 }

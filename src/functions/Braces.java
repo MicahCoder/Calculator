@@ -6,28 +6,27 @@ public class Braces implements Function {
     private final DoubleFunction<Double> function;
     private String name = "f";
     private String var = "x";
-    private final String funcName;
     private final String latexForm;
 
     // List of coeefiicients, starting by the highest order
     public Braces(String funcName) {
-        this.funcName = funcName;
         switch (funcName) {
-            case "abs":
+            case "abs" -> {
                 this.function = (x) -> Math.abs(x);
                 this.latexForm = "\\left|" + var + "\\right|";
-                break;
-            case "floor":
+            }
+            case "floor" -> {
                 this.function = (x) -> Math.floor(x);
                 this.latexForm = "\\left\\lfloor " + var + "\\right\\rfloor";
-                break;
-            case "ceil":
+            }
+            case "ceil" -> {
                 this.function = (x) -> Math.ceil(x);
                 this.latexForm = "\\left\\lceil " + var + "\\right\\rceil";
-                break;
-            default:
+            }
+            default -> {
                 this.function = (x) -> Math.abs(x);
                 this.latexForm = "|" + var + "|";
+            }
         }
 
     }
@@ -63,8 +62,13 @@ public class Braces implements Function {
         return latexForm;
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        throw new UnsupportedOperationException("Braces function does not have a derivative.");
+    }
 }

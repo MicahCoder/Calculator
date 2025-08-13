@@ -13,7 +13,8 @@ public interface Function {
     public static final Function SEC = new Misc("sec");
     public static final Function COT = new Misc("cot");
     public static final Function LN = new Misc("ln");
-    public static final Function ETOX = new Exponential("e", Math.E);
+    public static final Function SQRT = new Misc("sqrt");
+    public static final Function EXP = new Misc("exp");
 
     public default DoubleFunction<Double> getFunction() {
         return (x) -> 0.0;
@@ -58,5 +59,10 @@ public interface Function {
             default:
                 return doubleToString(num);
         }
+    }
+
+    public default Function prime() {
+        return new Function() {
+        };
     }
 }

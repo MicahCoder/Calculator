@@ -1,5 +1,6 @@
 package functions;
 
+import java.util.Arrays;
 import java.util.function.DoubleFunction;
 
 public class Product implements Function {
@@ -56,8 +57,20 @@ public class Product implements Function {
         return out;
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
+    }
+
+    @Override
+    public Function prime() {
+        if (functions.length == 2) {
+            return new Sum(name + "'", var, new Product(functions[0].prime(), functions[1]),
+                    new Product(functions[0], functions[1].prime()));
+        }
+        Function smallerProd = new Product(Arrays.copyOf(functions, functions.length - 1));
+        Function last = functions[functions.length - 1];
+        return new Sum(name + "'", var, new Product(smallerProd.prime(), last), new Product(smallerProd, last.prime()));
     }
 
 }

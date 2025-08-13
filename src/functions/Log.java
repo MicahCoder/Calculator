@@ -63,4 +63,10 @@ public class Log implements Function {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Rational(name + "'", var, new Constant(1),
+                new Product(new Constant("\\ln{" + doubleToString(base) + "}",
+                        Math.log(base)), new Monomial(1, 1)));
+    }
 }

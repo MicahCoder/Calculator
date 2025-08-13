@@ -60,4 +60,13 @@ public class Sum implements Function {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        Function[] primes = new Function[functions.length];
+        for (int i = 0; i < functions.length; i++) {
+            primes[i] = functions[i].prime();
+        }
+        return new Sum(name + "'", var, primes);
+    }
+
 }

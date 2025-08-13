@@ -72,22 +72,15 @@ public class Calculator {
 
     // Mode Chooser
     public static double integrate(DoubleFunction<Double> f, double a, double b, double dx, Mode mode) {
-        switch (mode) {
-            case LEFT:
-                return leftReimmanIntegrate(f, a, b, dx);
-            case RIGHT:
-                return rightReimmanIntegrate(f, a, b, dx);
-            case TRAPEZOIDAL:
-                return trapezoidalReimmanIntegrate(f, a, b, dx);
-            case L:
-                return leftReimmanIntegrate(f, a, b, dx);
-            case R:
-                return rightReimmanIntegrate(f, a, b, dx);
-            case T:
-                return trapezoidalReimmanIntegrate(f, a, b, dx);
-            default:
-                return leftReimmanIntegrate(f, a, b, dx);
-        }
+        return switch (mode) {
+            case LEFT -> leftReimmanIntegrate(f, a, b, dx);
+            case RIGHT -> rightReimmanIntegrate(f, a, b, dx);
+            case TRAPEZOIDAL -> trapezoidalReimmanIntegrate(f, a, b, dx);
+            case L -> leftReimmanIntegrate(f, a, b, dx);
+            case R -> rightReimmanIntegrate(f, a, b, dx);
+            case T -> trapezoidalReimmanIntegrate(f, a, b, dx);
+            default -> leftReimmanIntegrate(f, a, b, dx);
+        };
     }
 
     // String Chooser
@@ -123,25 +116,15 @@ public class Calculator {
     }
 
     public static double errorBound(DoubleFunction<Double> f, double a, double b, int steps, Mode mode) {
-        switch (mode) {
-            case LEFT:
-                return reimmanErrorBound(f, a, b, steps);
-            case RIGHT:
-                return reimmanErrorBound(f, a, b, steps);
-            case TRAPEZOIDAL:
-                return trapezoidalErrorBound(f, a, b, steps);
-            case L:
-                return reimmanErrorBound(f, a, b, steps);
-
-            case R:
-                return reimmanErrorBound(f, a, b, steps);
-
-            case T:
-                return trapezoidalErrorBound(f, a, b, steps);
-            default:
-                return reimmanErrorBound(f, a, b, steps);
-
-        }
+        return switch (mode) {
+            case LEFT -> reimmanErrorBound(f, a, b, steps);
+            case RIGHT -> reimmanErrorBound(f, a, b, steps);
+            case TRAPEZOIDAL -> trapezoidalErrorBound(f, a, b, steps);
+            case L -> reimmanErrorBound(f, a, b, steps);
+            case R -> reimmanErrorBound(f, a, b, steps);
+            case T -> trapezoidalErrorBound(f, a, b, steps);
+            default -> reimmanErrorBound(f, a, b, steps);
+        };
 
     }
 
@@ -222,34 +205,21 @@ public class Calculator {
     }
 
     public static Mode stringToMode(String mode) {
-        switch (mode) {
-            case "l":
-                return Mode.L;
-            case "L":
-                return Mode.L;
-            case "left":
-                return Mode.L;
-            case "Left":
-                return Mode.L;
-            case "r":
-                return Mode.R;
-            case "R":
-                return Mode.R;
-            case "right":
-                return Mode.R;
-            case "Right":
-                return Mode.R;
-            case "t":
-                return Mode.T;
-            case "T":
-                return Mode.T;
-            case "trapezoidal":
-                return Mode.T;
-            case "Trapezoidal":
-                return Mode.T;
-            default:
-                return Mode.L;
-        }
+        return switch (mode) {
+            case "l" -> Mode.L;
+            case "L" -> Mode.L;
+            case "left" -> Mode.L;
+            case "Left" -> Mode.L;
+            case "r" -> Mode.R;
+            case "R" -> Mode.R;
+            case "right" -> Mode.R;
+            case "Right" -> Mode.R;
+            case "t" -> Mode.T;
+            case "T" -> Mode.T;
+            case "trapezoidal" -> Mode.T;
+            case "Trapezoidal" -> Mode.T;
+            default -> Mode.L;
+        };
     }
 
     public static String evaluateIntegral(DoubleFunction<Double> f, double a,

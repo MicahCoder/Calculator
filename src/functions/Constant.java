@@ -53,8 +53,13 @@ public class Constant implements Function {
         return valueString;
     }
 
+    @Override
     public String toString() {
         return name + "(" + var + ") = " + toTex();
     }
 
+    @Override
+    public Function prime() {
+        return new Constant(0);
+    }
 }
